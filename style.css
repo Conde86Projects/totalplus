@@ -11,9 +11,11 @@ Text Domain: totalmais
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
-    --border-radius: 12px;
+    --border-radius: 12px; /* Using this for consistency */
     --spacing: 2rem;
     --transition: all 0.3s ease;
+    --header-padding: 1rem; /* New variable for header padding */
+    --header-height: 80px; /* Example height, can be adjusted */
 }
 
 body {
@@ -21,6 +23,7 @@ body {
     line-height: 1.7;
     color: #333;
     background: #fafafa;
+    margin-top: var(--header-height); /* Offset body content if header is fixed */
 }
 
 .container {
@@ -28,6 +31,160 @@ body {
     margin: 0 auto;
     padding: 0 var(--spacing);
 }
+
+/* --- Header --- */
+.header {
+    background: #fff; /* Example background */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: var(--header-padding) 0;
+    position: fixed; /* Or position: relative; if not fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Ensure it takes full width of .header */
+    max-width: 1400px; /* Align with .container */
+    margin: 0 auto;
+    padding: 0 var(--spacing); /* Use general spacing for left/right padding */
+    gap: 1.5rem; /* Gap between direct children */
+}
+
+/* Logo */
+.site-branding {
+    flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+.site-branding img {
+    max-height: calc(var(--header-height) - (2 * var(--header-padding))); /* Adjust logo size based on header height */
+    width: auto;
+    display: block;
+}
+
+.site-branding .site-title {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+/* Search Bar */
+.header-search {
+    flex-grow: 0; /* Don't let it grow excessively by default */
+    flex-basis: 300px; /* Default width, can adjust */
+    max-width: 400px; /* Max width */
+}
+
+.header-search .search-form {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures child elements also respect border-radius */
+}
+
+.header-search .search-field {
+    border: none; /* Remove individual border */
+    padding: 10px 15px; /* Adjusted padding */
+    flex-grow: 1;
+    font-size: 0.9rem;
+    outline: none;
+    margin-bottom: 0; /* Override default input margin */
+    width: 100%; /* Ensure it takes full width within form */
+}
+
+.header-search .search-submit {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    border-radius: 0; /* Remove individual radius if form has one */
+}
+
+.header-search .search-submit:hover {
+    background: var(--primary-color);
+}
+
+/* Main Navigation */
+.main-navigation {
+    flex-grow: 1; /* Allow menu to take available space */
+    display: flex;
+    justify-content: flex-start; /* Align menu items to the start */
+}
+
+.main-navigation .main-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem; /* Spacing between menu items */
+}
+
+.main-navigation .main-menu a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 0.5rem 0; /* Vertical padding, horizontal managed by gap */
+    transition: color 0.3s ease;
+    position: relative; /* For potential underline effects */
+}
+
+.main-navigation .main-menu a:hover {
+    color: var(--secondary-color);
+}
+
+.main-navigation .main-menu a::after { /* Subtle underline effect on hover */
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.main-navigation .main-menu a:hover::after {
+    width: 100%;
+}
+
+/* Header Icons */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Spacing between icons */
+    flex-shrink: 0; /* Prevent icons from shrinking */
+}
+
+.header-icons .header-icon {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.3rem; /* Adjust icon size */
+    transition: color 0.3s ease;
+    position: relative; /* For potential count display */
+}
+
+.header-icons .header-icon:hover {
+    color: var(--secondary-color);
+}
+
+.header-icons .header-icon i { /* If using font icons */
+    display: block;
+}
+
+/* --- End Header --- */
+
 
 /* Cards Modernos */
 .post-card {
@@ -73,7 +230,7 @@ body {
 /* Sidebar Minimalista */
 .widget {
     background: transparent;
-    border: 1px solid rgba(0,0,0,0.05);
+    /* border: 1px solid rgba(0,0,0,0.05); */ /* Removed border for even more minimal look */
     padding: 1.5rem;
     border-radius: var(--border-radius);
     margin-bottom: 2rem;
@@ -85,7 +242,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Formulários Modernos */
+/* Formulários Modernos (General) */
 input, textarea {
     border: 1px solid rgba(0,0,0,0.1);
     padding: 12px 20px;
@@ -93,6 +250,7 @@ input, textarea {
     transition: var(--transition);
     width: 100%;
     margin-bottom: 1rem;
+    font-family: inherit; /* Ensure form elements inherit font */
 }
 
 input:focus, textarea:focus {
@@ -102,7 +260,7 @@ input:focus, textarea:focus {
 }
 
 /* Botões Refinados */
-.button {
+.button, input[type="submit"], button { /* Apply to generic buttons too */
     background: var(--secondary-color);
     color: white;
     padding: 12px 30px;
@@ -118,10 +276,12 @@ input:focus, textarea:focus {
     cursor: pointer;
 }
 
-.button:hover {
+.button:hover, input[type="submit"]:hover, button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+    background: var(--primary-color); /* Darken on hover for better feedback */
 }
+
 
 /* Layout Fluido */
 .posts-grid {
@@ -133,39 +293,100 @@ input:focus, textarea:focus {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .search-container {
-        width: 100%;
-        max-width: none;
-        margin: 1rem 0;
+    body {
+        margin-top: 0; /* Remove top margin if header is not fixed or height changes */
     }
+
     .header {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 1rem;
+        height: auto; /* Allow header to grow if items wrap */
+        padding: 0.75rem 0; /* Reduced padding for mobile */
+        position: relative; /* Change to relative if fixed causes issues on mobile */
+    }
+
+    .header-container {
+        flex-wrap: wrap; /* Allow items to wrap */
+        gap: 0.75rem; /* Reduced gap for mobile */
+        padding: 0 1rem; /* Ensure some padding on mobile */
+    }
+
+    .site-branding {
+        flex-grow: 1; /* Allow logo to take space */
+        text-align: center; /* Center logo if it's alone on a line in some scenarios */
+        width: calc(100% - 80px); /* Example: Adjust width to make space for icons if they are on the same line */
     }
     
+    .site-branding img {
+        max-height: 40px; /* Adjust logo size for mobile */
+        margin: 0 auto; /* Center logo if text-align doesn't apply (e.g. if it's a block) */
+    }
+    
+    .site-branding .site-title {
+        font-size: 1.5rem; /* Adjust title size for mobile */
+    }
+
+
+    .header-search {
+        order: 3; /* Move search below logo and menu/icons */
+        flex-basis: 100%; /* Full width */
+        max-width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    .header-search .search-field {
+        padding: 8px 12px;
+    }
+    
+    .header-search .search-submit {
+        padding: 8px 12px;
+    }
+
     .main-navigation {
-        width: 100%;
-        flex-direction: column;
+        order: 4; /* After search */
+        width: 100%; 
+        justify-content: center; 
+        margin-top: 0.5rem; /* Add some space if it wraps to its own line */
     }
     
     .main-menu {
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: column; 
+        gap: 0.5rem;
+        width: 100%;
         text-align: center;
+        padding: 0.5rem 0; 
+    }
+
+    .main-menu a {
+        padding: 0.75rem; /* Adjust padding for touch targets */
+        display: block; /* Make links take full width for easier tapping */
+        border-bottom: 1px solid #eee; /* Separator for stacked items */
     }
     
-    .woocommerce-menu {
-        margin: 1rem 0 0;
-        justify-content: center;
+    .main-menu li:last-child a {
+        border-bottom: none; /* Remove border from last item */
     }
     
-    .contact-content {
-        grid-template-columns: 1fr;
+    .main-menu a::after { 
+        display: none;
+    }
+
+    .header-icons {
+        order: 2; /* Position icons to the right of the logo typically */
+        gap: 0.75rem;
+        margin-left: auto; /* Push to the right if logo takes available space */
+    }
+    
+    .header-icons .header-icon {
+        font-size: 1.2rem; 
+    }
+
+    .menu-toggle { /* If a hamburger menu toggle is introduced */
+        display: block; /* Or flex, depending on styling */
+        order: 1; /* Or adjust as needed */
+        /* Add styling for hamburger icon */
     }
 }
 
-/* WooCommerce */
+/* WooCommerce specific styles */
 .woocommerce button, 
 .woocommerce a.button {
     border-radius: var(--border-radius) !important;
@@ -221,19 +442,41 @@ input:focus, textarea:focus {
 
 /* Sidebar */
 .sidebar {
-    width: 300px;
-    padding-left: 2rem;
+    width: 300px; 
+    padding-left: 2rem; 
 }
 
 /* Layout com sidebar */
-@media (min-width: 768px) {
+@media (min-width: 769px) { /* Changed from 768 to 769 to avoid conflict with mobile header rules */
     .content-area {
-        display: flex;
+        display: flex; 
         gap: 3rem;
     }
     
     main.content {
         flex: 1;
+    }
+
+    /* Ensure main menu is horizontal on desktop, overriding potential mobile styles if menu toggle logic is added */
+    .main-navigation {
+        order: initial; /* Reset order */
+        width: auto;
+        margin-top: 0;
+    }
+    .main-menu {
+      flex-direction: row;
+      gap: 1.5rem;
+      width: auto;
+      text-align: left;
+      padding: 0;
+    }
+    .main-menu a {
+        padding: 0.5rem 0;
+        display: inline; /* Not block */
+        border-bottom: none;
+    }
+    .main-menu a::after { /* Restore underline effect for desktop */
+        display: block; 
     }
 }
 
@@ -242,7 +485,7 @@ input:focus, textarea:focus {
     display: grid;
     gap: 1.5rem;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto; 
 }
 
 .wpcf7-form label {
@@ -256,50 +499,13 @@ input:focus, textarea:focus {
 .wpcf7-form input[type="email"],
 .wpcf7-form input[type="tel"],
 .wpcf7-form textarea {
-    width: 100%;
-    padding: 12px 20px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    background: white;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-.wpcf7-form input[type="text"]:focus,
-.wpcf7-form input[type="email"]:focus,
-.wpcf7-form input[type="tel"]:focus,
-.wpcf7-form textarea:focus {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-    outline: none;
-}
-
-.wpcf7-form textarea {
-    min-height: 150px;
-    resize: vertical;
+    background: white; 
 }
 
 .wpcf7-submit {
-    background: var(--secondary-color);
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: var(--border-radius);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: var(--transition);
-    width: auto;
-    margin: 0 auto;
+    width: auto; 
+    margin: 0 auto; 
     display: block;
-}
-
-.wpcf7-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
 }
 
 .wpcf7-response-output {
@@ -308,18 +514,18 @@ input:focus, textarea:focus {
     border-radius: var(--border-radius);
     text-align: center;
     font-size: 0.9rem;
+    border: none; 
 }
 
 .wpcf7 form.sent .wpcf7-response-output {
     background: #d4edda;
     color: #155724;
-    border: 1px solid #c3e6cb;
 }
 
-.wpcf7 form.failed .wpcf7-response-output {
+.wpcf7 form.failed .wpcf7-response-output,
+.wpcf7 form.invalid .wpcf7-response-output { 
     background: #f8d7da;
     color: #721c24;
-    border: 1px solid #f5c6cb;
 }
 
 .wpcf7-not-valid-tip {
@@ -328,15 +534,7 @@ input:focus, textarea:focus {
     margin-top: 0.25rem;
 }
 
-.wpcf7 form.invalid .wpcf7-response-output,
-.wpcf7 form.failed .wpcf7-response-output,
-.wpcf7 form.sent .wpcf7-response-output {
-    border: none;
-    padding: 1rem;
-    margin: 1rem 0;
-}
-
-/* Estilos para os ícones de contato */
+/* Estilos para os ícones de contato (if used outside header) */
 .contact-info .info-item {
     display: flex;
     align-items: center;
@@ -354,11 +552,9 @@ input:focus, textarea:focus {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.contact-info .dashicons {
+.contact-info .dashicons { 
     color: var(--secondary-color);
     font-size: 1.5rem;
-    width: auto;
-    height: auto;
 }
 
 .contact-info p {
@@ -367,314 +563,50 @@ input:focus, textarea:focus {
     color: var(--primary-color);
 }
 
-/* Responsividade do formulário */
-@media (max-width: 768px) {
-    .wpcf7-form {
-        padding: 0 1rem;
-    }
-    
-    .contact-info .info-item {
-        padding: 0.75rem;
-    }
-}
-
-/* Header Modernizado */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-left: auto;
-}
-
-.header-icon {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 8px;
-    transition: var(--transition);
-}
-
-.header-icon .icon {
-    width: 24px;
-    height: 24px;
-    fill: transparent;
-    stroke: var(--primary-color);
-    stroke-width: 2px;
-}
-
-.header-icon:hover .icon {
-    stroke: var(--secondary-color);
-    fill: var(--secondary-color);
-}
-
-/* Contadores */
-.wishlist-count,
-.cart-count {
+/* WooCommerce Icon Counts in Header */
+.header-icons .header-icon .cart-count, 
+.header-icons .header-icon .wishlist-count {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -8px;
+    right: -8px;
     background: var(--secondary-color);
     color: white;
     min-width: 20px;
     height: 20px;
-    padding: 2px;
-    border-radius: 10px;
+    border-radius: 10px; 
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
     font-weight: 500;
+    line-height: 1; 
+    padding: 2px;
 }
 
-/* Alinhamento vertical */
-.cart-icon a,
-.wishlist-icon a {
-    display: flex;
-    align-items: center;
+/* Responsividade Final */
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr; 
+    }
+    
+    .wpcf7-form {
+        padding: 0 1rem; 
+    }
+    
+    .contact-info .info-item {
+        padding: 0.75rem;
+    }
+
+    .posts-grid {
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+    }
 }
 
-/* Espaçamento entre ícones */
-.woocommerce-menu > * {
-    margin: 0 0.5rem;
-}
-
-/* Ajuste de hover */
-.header-icon:hover {
-    transform: translateY(-2px);
-}
-
-/* Carrinho Moderno */
-.cart-icon {
-    position: relative;
-    display: flex;
-}
-
-.cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--secondary-color);
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-/* Esconde completamente a mensagem do carrinho vazio */
-.woocommerce-mini-cart__empty-message {
+/* Remove duplicate/old header styles that might have been missed in the merge */
+/* Styles like .header-actions, .menu-toggle (if a new one isn't planned for this iteration) */
+/* The new .header, .header-container, etc. styles should take precedence. */
+.menu-toggle { /* Assuming no JS hamburger for now, hide any default toggles */
     display: none !important;
 }
-
-/* Dropdown do Carrinho */
-.widget_shopping_cart {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 300px;
-    background: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.cart-icon:hover .widget_shopping_cart {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Menu hamburger só para mobile */
-@media (max-width: 768px) {
-    .main-navigation {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .main-menu {
-        display: none;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        padding: 1rem;
-        z-index: 1000;
-    }
-    
-    .header-actions {
-        gap: 1rem;
-    }
-    
-    .menu-toggle {
-        display: block !important;
-    }
-    
-    .main-menu.active {
-        display: flex !important;
-    }
-}
-
-/* Garante que o menu normal aparece em desktop */
-@media (min-width: 769px) {
-    .menu-toggle {
-        display: none !important;
-    }
-    
-    .main-menu {
-        display: flex !important;
-    }
-}
-
-/* Wishlist */
-.woocommerce .wishlist-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    padding: 0.5rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 2;
-}
-
-.woocommerce .wishlist-button.added svg {
-    fill: var(--secondary-color);
-}
-
-/* Ícone de Favoritos */
-.wishlist-icon {
-    position: relative;
-    display: flex;
-}
-
-.wishlist-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--secondary-color);
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-.wishlist-icon .icon {
-    fill: transparent;
-    stroke: var(--primary-color);
-    stroke-width: 2px;
-    transition: var(--transition);
-}
-
-.wishlist-icon:hover .icon {
-    stroke: var(--secondary-color);
-    fill: var(--secondary-color);
-    transform: translateY(-2px);
-}
-
-/* Container principal */
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 0 2rem;
-}
-
-/* Ajuste no menu para preencher o espaço */
-.main-navigation {
-    flex: 1;
-    margin-left: 2rem;
-}
-
-/* Mantenha apenas o essencial para ícones */
-.header-icons {
-    display: flex;
-    gap: 1.2rem;
-    margin-left: auto;
-}
-
-/* Logo */
-.site-branding img {
-    height: 50px;
-    width: auto;
-    display: block;
-}
-
-/* Menu */
-.main-navigation {
-    display: flex;
-    align-items: center;
-}
-
-.main-navigation .main-menu {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.main-navigation .main-menu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding: 0.5rem;
-    transition: color 0.3s;
-}
-
-.main-navigation .main-menu a:hover {
-    color: var(--secondary-color);
-}
-
-/* Ícones */
-.header-icons {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    margin-left: 1rem;
-}
-
-.header-icon i {
-    font-size: 1.2rem;
-    color: #333;
-    transition: color 0.3s;
-}
-
-.header-icon:hover i {
-    color: #3498db;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .header-container {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 1rem 0;
-        gap: 1rem;
-    }
-    
-    .main-navigation {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .header-icons {
-        order: 1;
-        margin-left: auto;
-    }
-} 
+```
